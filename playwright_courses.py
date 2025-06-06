@@ -30,8 +30,16 @@ with sync_playwright() as playwright:
     context = browser.new_context(storage_state="browser-state.json") # Указываем файл с сохраненным состоянием
     page = context.new_page()
 
-    page.goto("https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/dashboard")
+    page.goto("https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/courses")
 
-    page.wait_for_timeout(5000)
+    courses_title = page.get_by_test_id('courses-list-toolbar-title-text')
+    expect(courses_title).to_be_visible()
 
+    courses_empty_icon = page.get_by_test_id('courses-list-empty-view-icon')
+    expect(courses_empty_icon).to_be_visible()
 
+    courses_empty_title = page.get_by_test_id('courses-list-empty-view-title-text')
+    expect(courses_empty_title).to_be_visible()
+
+    courses_empty_text = page.get_by_test_id('courses-list-empty-view-description-text')
+    expect(courses_empty_text).to_be_visible()
