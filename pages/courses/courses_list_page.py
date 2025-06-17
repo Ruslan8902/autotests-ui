@@ -1,3 +1,5 @@
+import allure
+
 from playwright.sync_api import Page, expect
 
 from components.courses.course_view_component import CourseViewComponent
