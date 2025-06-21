@@ -2,7 +2,7 @@ import allure
 from playwright.sync_api import Playwright, Page
 
 from config import settings, Browser
-
+from tools.playwright.mocks import mock_static_resources
 
 def initialize_playwright_page(
         playwright: Playwright,
@@ -19,13 +19,12 @@ def initialize_playwright_page(
     )
     context.tracing.start(screenshots=True, snapshots=True, sources=True)
     page = context.new_page()
+    mock_static_resources(page)
 
     yield page
 
-    # Используем settings.tracing_dir
     context.tracing.stop(path=settings.tracing_dir.joinpath(f'{test_name}.zip'))
     browser.close()
 
-    # Используем settings.tracing_dir
-  #  allure.attach.file(settings.tracing_dir.joinpath(f'{test_name}.zip'), name='trace', extension='zip')
-  #  allure.attach.file(page.video.path(), name='video', attachment_type=allure.attachment_type.WEBM)
+    allure.attach.file(settings.tracing_dir.joinpath(f'{test_name}.zip'), name='trace', extension='zip')
+    allure.attach.file(page.video.path(), name='video', attachment_type=allure.attachment_type.WEBM)
