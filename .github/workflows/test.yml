@@ -46,6 +46,8 @@ jobs:
 
 
   publish-report:
+    runs-on: ubuntu-latest
+
     steps:
       - name: Download allure-results folder
         uses: actions/download-artifact@v4
